@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void pryam_obh(int n, int*k, int koren){
+	for (int i = 0; i < n; i++){
+		if (k[i] == koren){
+			cout << i << " ";
+			pryam_obh(n, k, i); 
+		} 
+	}
+}
+
+void obr_obh(int n,int *k, int koren){
+	for (int i = 0; i < n; i++){
+		if (k[i] == koren){
+			obr_obh(n, k, i);
+			cout << i << " ";
+		}
+	}
+}
+
+void sim_obh(int n, int *k, int koren) {
+	int first_children_i = -2;
+	for (int i = 0; i < n; i++) {
+		if (k[i] == koren) {
+			sim_obh(n, k, i);
+			first_children_i = i;
+			break;
+		}
+	}
+	if (koren != -1) cout << koren << " ";
+	if (first_children_i != -1) {
+		for (int i = first_children_i + 1; i < n; i++) {
+			if (k[i] == koren) {
+				sim_obh(n,k,i);
+			}
+		}
+	}
+}
+
+void main(){
+	int n, *k=0; string s;
+	cout << "n=";  cin >> n;
+	cin.get();
+	cout << "vvedite massiv\n";  getline(cin, s); 
+	k = new int[n];
+	for (int i = 0; i < n; i++){
+		k[i] = atoi(s.substr(0, s.find(" ", 0)).c_str());
+		s.erase(0, s.find(" ", 0) + 1);
+	}
+	pryam_obh(n, k, -1); cout << endl;
+	obr_obh(n, k, -1); cout << endl;
+	sim_obh(n, k, -1); cout << endl;
+	system("pause");
+}
